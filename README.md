@@ -24,14 +24,6 @@ This started as a simple idea: bringing the 7TV Twitch emote experience - especi
 2. [Add 7DC to Discord](https://discord.com/oauth2/authorize?client_id=1513755393682313467)
 3. Use the commands below to get started sending emotes or configure your experience
 
-# <img src="https://cdn.7tv.app/emote/01G96X3198000E1TFQ6V2HEJW7/4x.avif" width="48" height="41" alt="emoji"> Early Access
-
-7DC is currently in **Early Access**
-
-This phase helps gather usage data, test server stability under load and predict future infrastructure. It also allows features and workflows to be refined based on community feedback, helping make the application as stable, reliable, and user-friendly as possible before a bigger release.
-
-While the app is fully functional, you may occasionally encounter bugs, unexpected behavior, or temporary limitations
-
 [Feedback](https://github.com/0PZI/7DC-Public/issues) is greatly appreciated and helps shape the future of 7DC
 
 # <img src="https://cdn.7tv.app/emote/01FC9H31S800013JMVXD3ETX68/4x.avif" width="48" height="49" alt="emoji"> Commands
@@ -39,6 +31,7 @@ While the app is fully functional, you may occasionally encounter bugs, unexpect
 * `/emote [name]` | `/e [name]` — Search and send an emote from your active emote-set
 * `/size [small/medium/large]` — Change your default emote preview size `default=small`
 * `/set [emote-set ID or link]` — Change your active emote-set or fall back to default
+* `/help` — Show info about 7DC
 
 <details>
 <summary><strong>Emote Reactions Guide</strong></summary>
