@@ -131,7 +131,7 @@
   <div class="disc">7TV Discord Bridge · Not affiliated with 7TV or Discord.</div>
 </footer>
 
-<button id="toTop" title="Back to top">↑</button>
+<button id="toTop" title="Back to top"></button>
 
 <script>
   const progress = document.getElementById('progress');
@@ -221,6 +221,16 @@
     }
   }
 
+  function resetScrollState(scrollValue = window.scrollY) {
+    if (scrollRaf) {
+      cancelAnimationFrame(scrollRaf);
+      scrollRaf = null;
+    }
+    scrollTarget = scrollValue;
+    currentScroll = scrollValue;
+    updateScrollProgress(scrollValue);
+  }
+
   window.addEventListener('scroll', updateScrollProgress);
 
   window.addEventListener('wheel', (event) => {
@@ -236,16 +246,34 @@
     const start = window.scrollY;
     const startTime = performance.now();
 
+    if (scrollRaf) {
+      cancelAnimationFrame(scrollRaf);
+      scrollRaf = null;
+    }
+
+    scrollTarget = 0;
+    currentScroll = start;
+
     function step(now) {
       const elapsed = Math.min((now - startTime) / duration, 1);
       const ease = 1 - Math.pow(1 - elapsed, 3);
-      window.scrollTo(0, start * (1 - ease));
+      const nextScroll = start * (1 - ease);
+      window.scrollTo(0, nextScroll);
+      currentScroll = nextScroll;
+      updateScrollProgress(nextScroll);
+
       if (elapsed < 1) {
-        requestAnimationFrame(step);
+        scrollRaf = requestAnimationFrame(step);
+      } else {
+        scrollRaf = null;
+        scrollTarget = 0;
+        currentScroll = 0;
+        window.scrollTo(0, 0);
+        updateScrollProgress(0);
       }
     }
 
-    requestAnimationFrame(step);
+    scrollRaf = requestAnimationFrame(step);
   }
 
   toTop.addEventListener('click', (event) => {
@@ -255,6 +283,25 @@
 
   const links = document.querySelectorAll('nav.side a');
   const sections = [...links].map(a => document.querySelector(a.getAttribute('href')));
+
+  links.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const targetId = link.getAttribute('href');
+      const target = document.querySelector(targetId);
+      if (!target) return;
+
+      const targetTop = target.getBoundingClientRect().top + window.scrollY - 100;
+      resetScrollState(window.scrollY);
+
+      scrollTarget = targetTop;
+      currentScroll = window.scrollY;
+      if (!scrollRaf) {
+        scrollRaf = requestAnimationFrame(animateScroll);
+      }
+      setActive();
+    });
+  });
 
   function setActive() {
     const scrollPos = window.scrollY;
