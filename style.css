@@ -150,25 +150,56 @@ header.top {
   text-decoration: none;
   cursor: pointer;
   border-radius: 0;
-  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
   white-space: nowrap;
   display: inline-block;
 }
 
 .btn:hover {
   border-color: var(--fg);
+  transform: translateY(-1px);
 }
 
 .btn.solid {
-  background: var(--fg);
-  color: var(--bg);
+  background: transparent;
+  color: transparent;
+  border-width: 2px;
   border-color: var(--fg);
+  background-image: url("https://cdn.7tv.app/paint/01JPNDC5W5S8MJ4T20GBANNPW4/layer/01JWSBH2HKVWQ6PBNF0992JM9T/4x.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .btn.solid:hover {
   background: transparent;
-  color: var(--fg);
+  color: transparent;
   box-shadow: 0 0 24px rgba(255, 255, 255, 0.35), 0 0 40px rgba(255, 255, 255, 0.15);
+  border-color: transparent;
+  position: relative;
+}
+
+.btn.solid:hover::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border: 2px solid transparent;
+  border-image: url("https://cdn.7tv.app/paint/01JPNDC5W5S8MJ4T20GBANNPW4/layer/01JWSBH2HKVWQ6PBNF0992JM9T/4x.webp") 1 stretch;
+  border-image-slice: 1;
+  pointer-events: none;
+}
+
+.btn.solid:hover {
+  background-image: url("https://cdn.7tv.app/paint/01JPNDC5W5S8MJ4T20GBANNPW4/layer/01JWSBH2HKVWQ6PBNF0992JM9T/4x.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .layout {
@@ -245,11 +276,20 @@ body:not(.at-top) footer {
 }
 
 .hero h1 {
+  display: inline-block;
   font-size: 44px;
   line-height: 1.08;
   margin: 0 0 20px;
   letter-spacing: -1.5px;
   font-weight: 800;
+  background-image: url("https://cdn.7tv.app/paint/01JPNDC5W5S8MJ4T20GBANNPW4/layer/01JWSBH2HKVWQ6PBNF0992JM9T/4x.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero-icon {
