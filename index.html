@@ -5,200 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>7DC — 7TV Discord Bridge</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet" />
-<style>
-  :root {
-    --bg: #070707;
-    --bg-2: #101012;
-    --fg: #f2f2f2;
-    --muted: #8a8a90;
-    --line: #26262a;
-    --line-strong: #3a3a40;
-    --code-bg: #161619;
-  }
-
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--fg);
-    font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
-    font-weight: 700;
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-  }
-  a { color: inherit; }
-  ::selection { background: var(--fg); color: var(--bg); }
-
-  #progress {
-    position: fixed; inset: 0 auto auto 0;
-    height: 2px; width: 0%;
-    background: var(--fg);
-    z-index: 200;
-  }
-
-  header.top {
-    position: sticky; top: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 15px 26px;
-    background: rgba(11,11,12,.82);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--line);
-  }
-  .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 15px; letter-spacing: .2px; }
-  .brand img {
-    width: 64px; height: 64px;
-    object-fit: contain;
-    display: block;
-    position: relative;
-    top: 3px;
-  }
-  .btn {
-    border: 1px solid var(--line-strong);
-    background: transparent; color: var(--fg);
-    padding: 9px 18px; font-size: 13px; font-weight: 600;
-    text-decoration: none; cursor: pointer; border-radius: 0;
-    transition: background .15s ease, border-color .15s ease;
-    white-space: nowrap; display: inline-block;
-  }
-  .btn:hover { border-color: var(--fg); }
-  .btn.solid { background: var(--fg); color: var(--bg); border-color: var(--fg); }
-  .btn.solid:hover { background: transparent; color: var(--fg); }
-
-  .layout { display: grid; grid-template-columns: 220px 1fr; max-width: 1160px; margin: 0 auto; }
-  nav.side {
-    position: sticky; top: 61px; align-self: start;
-    height: calc(100vh - 61px);
-    padding: 40px 12px; overflow-y: auto;
-  }
-  nav.side a {
-    display: block; padding: 7px 14px;
-    color: var(--muted); text-decoration: none;
-    font-size: 13.5px; font-weight: 500;
-    border-left: 2px solid transparent;
-    transition: color .12s ease, border-color .12s ease;
-  }
-  nav.side a:hover { color: var(--fg); }
-  nav.side a.active { color: var(--fg); border-left-color: var(--fg); }
-
-  main { padding: 56px 56px 140px; min-width: 0; border-left: 1px solid var(--line); }
-
-  .hero { padding: 8px 0 56px; border-bottom: 1px solid var(--line); margin-bottom: 64px; }
-  .tag {
-    display: inline-block; font-size: 11px; font-weight: 600;
-    letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
-    border: 1px solid var(--line-strong); padding: 5px 11px; margin-bottom: 26px;
-  }
-  .hero h1 { font-size: 44px; line-height: 1.08; margin: 0 0 20px; letter-spacing: -1.5px; font-weight: 800; }
-  .hero p { font-size: 17px; color: var(--muted); max-width: 620px; margin: 0 0 32px; }
-  .cta { display: flex; gap: 12px; flex-wrap: wrap; }
-
-  section { margin-bottom: 76px; scroll-margin-top: 90px; }
-  section > h2 { display: flex; align-items: center; gap: 10px; font-size: 24px; letter-spacing: 5px; text-transform: uppercase; color: var(--fg); margin: 0 0 22px; font-weight: 600; }
-  section > h2 img { width: 64px; height: 64px; object-fit: contain; }
-  .h-lead { font-size: 22px; font-weight: 700; letter-spacing: -.4px; margin: 0 0 26px; }
-
-  .features { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); }
-  .feature { background: var(--bg); padding: 26px 24px; }
-  .feature h3 { margin: 0 0 8px; font-size: 15.5px; font-weight: 700; }
-  .feature p { margin: 0; color: var(--muted); font-size: 14px; }
-
-  .steps { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
-  .step { background: var(--bg); display: flex; gap: 20px; padding: 22px 24px; align-items: flex-start; }
-  .step .num { flex: 0 0 auto; width: 28px; font-size: 22px; font-weight: 800; color: var(--line-strong); line-height: 1; }
-  .step h3 { margin: 0 0 3px; font-size: 15.5px; font-weight: 700; }
-  .step p { margin: 0; color: var(--muted); font-size: 14px; }
-  .step a { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
-
-  .callout { border: 1px solid var(--line-strong); border-left-width: 3px; padding: 22px 24px; background: var(--bg-2); }
-  .callout .k { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-  .callout p { margin: 12px 0 0; color: var(--muted); font-size: 14.5px; }
-  .callout a { color: var(--fg); text-decoration: underline; text-underline-offset: 3px; }
-
-  .cmd-search {
-    width: 100%; padding: 13px 15px;
-    border: 1px solid var(--line-strong); background: var(--bg-2);
-    color: var(--fg); font-size: 14px; border-radius: 0; margin-bottom: 18px;
-    font-family: inherit;
-  }
-  .cmd-search::placeholder { color: var(--muted); }
-  .cmd-search:focus { outline: none; border-color: var(--fg); }
-  .cmd-list { border: 1px solid var(--line); }
-  .cmd {
-    display: flex; align-items: center; gap: 18px;
-    padding: 15px 18px; border-bottom: 1px solid var(--line);
-  }
-  .cmd:last-child { border-bottom: none; }
-  code {
-    font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
-    font-weight: 400;
-    background: var(--code-bg); padding: 3px 8px; font-size: 12.5px;
-    border: 1px solid var(--line); color: var(--fg);
-  }
-  .cmd .desc { color: var(--muted); font-size: 14px; flex: 1; }
-  .copy {
-    border: 1px solid var(--line-strong); background: transparent; color: var(--muted);
-    font-size: 11px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase;
-    padding: 7px 11px; cursor: pointer; border-radius: 0; flex: 0 0 auto;
-    transition: color .12s ease, border-color .12s ease;
-  }
-  .copy:hover { color: var(--fg); border-color: var(--fg); }
-  .copy.done { color: var(--bg); background: var(--fg); border-color: var(--fg); }
-
-  details { border: 1px solid var(--line); margin-top: 20px; }
-  summary {
-    cursor: pointer; padding: 16px 18px; font-weight: 700; font-size: 14.5px;
-    list-style: none; display: flex; align-items: center; justify-content: space-between;
-  }
-  summary::-webkit-details-marker { display: none; }
-  summary::after { content: "+"; font-size: 18px; color: var(--muted); }
-  details[open] summary { border-bottom: 1px solid var(--line); }
-  details[open] summary::after { content: "–"; }
-  .guide-body { padding: 4px 18px 18px; }
-  .guide-step { padding: 20px 0; border-bottom: 1px solid var(--line); }
-  .guide-step:last-child { border-bottom: none; }
-  .guide-step strong { display: block; margin-bottom: 5px; font-size: 14.5px; }
-  .guide-step span { color: var(--muted); font-size: 14px; }
-  .guide-step code { display: inline-block; margin-top: 6px; }
-  .guide-step img { display: block; margin-top: 14px; max-width: 100%; height: auto; border: 1px solid var(--line); }
-
-  ul.plain { margin: 0; padding: 0; list-style: none; border: 1px solid var(--line); }
-  ul.plain li { padding: 15px 18px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 14px; }
-  ul.plain li:last-child { border-bottom: none; }
-  ul.plain li strong { color: var(--fg); font-weight: 700; }
-
-  footer {
-    border-top: 1px solid var(--line);
-    padding: 34px 56px; max-width: 1160px; margin: 0 auto;
-    color: var(--muted); font-size: 13px;
-  }
-  footer .links { display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 20px; }
-  footer .links a { color: var(--fg); text-decoration: none; font-weight: 600; }
-  footer .links a:hover { text-decoration: underline; text-underline-offset: 3px; }
-  footer .disc { border-top: 1px solid var(--line); padding-top: 18px; }
-
-  #toTop {
-    position: fixed; bottom: 26px; right: 26px;
-    width: 44px; height: 44px; background: var(--fg); color: var(--bg);
-    border: none; cursor: pointer; font-size: 18px; font-weight: 800;
-    display: none; place-items: center; z-index: 150; border-radius: 0;
-  }
-  #toTop.show { display: grid; }
-
-  @media (max-width: 860px) {
-    .layout { grid-template-columns: 1fr; }
-    nav.side { display: none; }
-    main { padding: 36px 22px 110px; border-left: none; }
-    .features { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 33px; }
-  }
-</style>
+<link href="style.css" rel="stylesheet" />
 </head>
 <body>
+<div class="cursor-glow" id="cursorGlow"></div>
 <div id="progress"></div>
+<div id="nuhUh"><img src="https://cdn.7tv.app/emote/01HRZFN6VR000FNZZCB82KQJ1N/4x.avif" alt="nuh-uh emote" /></div>
 
 <header class="top">
-  <div class="brand"><img src="https://cdn.discordapp.com/avatars/1513755393682313467/7dd158497f48cb87aa8e3716f25e5c22.png?size=128" alt="7DC logo" /></div>
+  <div class="brand">
+    <img id="headerRotator" src="https://cdn.discordapp.com/avatars/1513755393682313467/7dd158497f48cb87aa8e3716f25e5c22.png?size=128" alt="7DC logo" />
+  </div>
   <a class="btn solid" href="https://discord.com/oauth2/authorize?client_id=1513755393682313467" target="_blank" rel="noopener">Install 7DC</a>
 </header>
 
@@ -217,7 +34,7 @@
   <main>
     <section id="overview">
       <div class="hero">
-        <h1>Your 7TV emotes,<br />everywhere on Discord.</h1>
+        <h1>Your 7TV emotes,<br />everywhere on Discord.<a href="https://7tv.app/emotes/01H8K68XV8000133946WK71ADB" target="_blank" rel="noopener noreferrer"><img class="hero-icon" src="https://cdn.7tv.app/emote/01H8K68XV8000133946WK71ADB/4x.avif" alt="Discord icon" /></a></h1>
         <p>7DC started as a simple idea: bringing the 7TV Twitch emote experience — especially wide-emotes — to Discord. It's tied to your account and works across DMs, group chats and servers, with no bot needed in each channel.</p>
         <div class="cta">
           <a class="btn solid" href="https://discord.com/oauth2/authorize?client_id=1513755393682313467" target="_blank" rel="noopener">Install 7DC</a>
@@ -227,7 +44,7 @@
     </section>
 
     <section id="features">
-      <h2><img src="https://cdn.7tv.app/emote/01FPCZ99CR000EJT2EVEY3K7J8/4x.avif" alt="" /> Features</h2>
+      <h2><a href="https://7tv.app/emotes/01FDW4SE1R000CM9KGHJPMM9KQ" target="_blank" rel="noopener noreferrer" aria-label="Open the Features emote on 7TV" title="Open the Features emote on 7TV"><img src="https://cdn.7tv.app/emote/01FDW4SE1R000CM9KGHJPMM9KQ/4x.avif" alt="Features emote" /></a> Features</h2>
       <div class="features">
         <div class="feature"><h3>Use everywhere</h3><p>Thanks to Discord's "User Install" feature, your emotes follow you globally.</p></div>
         <div class="feature"><h3>7TV sync</h3><p>Pulls directly from your current active 7TV emote-set.</p></div>
@@ -237,7 +54,7 @@
     </section>
 
     <section id="usage">
-      <h2><img src="https://cdn.7tv.app/emote/01HVWN8E1G0003S49WDMY4KNHN/4x.avif" alt="" /> How to Use</h2>
+      <h2><a href="https://7tv.app/emotes/01H481W50G0005ERYRZDP1SG3M" target="_blank" rel="noopener noreferrer"><img src="https://cdn.7tv.app/emote/01H481W50G0005ERYRZDP1SG3M/4x.avif" alt="" /></a> How to Use</h2>
       <div class="steps">
         <div class="step"><div class="num">1</div><div><h3>Link your account</h3><p>Connect your Discord account to your <a href="https://7tv.app/settings" target="_blank" rel="noopener">7TV profile</a>.</p></div></div>
         <div class="step"><div class="num">2</div><div><h3>Add 7DC to Discord</h3><p><a href="https://discord.com/oauth2/authorize?client_id=1513755393682313467" target="_blank" rel="noopener">Install the app</a> to your account.</p></div></div>
@@ -246,7 +63,7 @@
     </section>
 
     <section id="commands">
-      <h2><img src="https://cdn.7tv.app/emote/01FC9H31S800013JMVXD3ETX68/4x.avif" alt="" /> Commands</h2>
+      <h2><a href="https://7tv.app/emotes/01FP2JXAT0000EJT2EVEY3HXZ8" target="_blank" rel="noopener noreferrer"><img src="https://cdn.7tv.app/emote/01FP2JXAT0000EJT2EVEY3HXZ8/4x.avif" alt="" /></a> Commands</h2>
       <!-- <input class="cmd-search" id="cmdSearch" placeholder="Filter commands…" /> -->
       <div class="cmd-list" id="cmdList">
         <div class="cmd"><code>/emote [name]</code> <span class="desc">Search and send an emote from your active emote-set (alias: <code>/e</code>).</span><button class="copy" data-copy="/emote name:">Copy</button></div>
@@ -266,7 +83,7 @@
     </section>
 
     <section id="performance">
-      <h2><img src="https://cdn.7tv.app/emote/01FB4NYBG0000FFZEHGR5A0DYS/4x.avif" alt="" /> Performance &amp; Caching</h2>
+      <h2><a href="https://7tv.app/emotes/01FB4NYBG0000FFZEHGR5A0DYS" target="_blank" rel="noopener noreferrer"><img src="https://cdn.7tv.app/emote/01FB4NYBG0000FFZEHGR5A0DYS/4x.avif" alt="" /></a> Performance &amp; Caching</h2>
       <ul class="plain">
         <li><strong>Instant search.</strong> Your 7TV emote-list is cached in-memory for 10 minutes, so suggestions appear instantly without waiting for an API response.</li>
         <li><strong>Efficient API usage.</strong> Caching prevents unnecessary requests to 7TV's servers, keeping the integration smooth and stable.</li>
@@ -274,7 +91,7 @@
     </section>
 
     <section id="privacy">
-      <h2><img src="https://cdn.7tv.app/emote/01JQHGR6R8705W0TX7MC5CGAE7/4x.avif" alt="" /> Data &amp; Privacy</h2>
+      <h2><a href="https://7tv.app/emotes/01JQHGR6R8705W0TX7MC5CGAE7" target="_blank" rel="noopener noreferrer"><img src="https://cdn.7tv.app/emote/01JQHGR6R8705W0TX7MC5CGAE7/4x.avif" alt="" /></a> Data &amp; Privacy</h2>
       <ul class="plain">
         <li><strong>No private data.</strong> The app does not collect or store passwords, emails or private messages.</li>
         <li><strong>Public IDs only.</strong> It only maps your public Discord ID to your public 7TV ID — both already visible on your public profiles.</li>
@@ -283,7 +100,7 @@
     </section>
 
     <section id="limitations">
-      <h2><img src="https://cdn.7tv.app/emote/01G6ZS6QDR0003EG3F712GQ2C8/4x.avif" alt="" /> Limitations</h2>
+      <h2><a href="https://7tv.app/emotes/01HPSDAPAR0009V37317AFM230" target="_blank" rel="noopener noreferrer"><img src="https://cdn.7tv.app/emote/01HPSDAPAR0009V37317AFM230/4x.avif" alt="" /></a> Limitations</h2>
       <ul class="plain">
         <li>Emote previews are not possible.</li>
         <li>Emote Reactions do not feature autocompletion.</li>
@@ -318,12 +135,122 @@
 <script>
   const progress = document.getElementById('progress');
   const toTop = document.getElementById('toTop');
-  window.addEventListener('scroll', () => {
-    const h = document.documentElement;
-    progress.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
-    toTop.classList.toggle('show', h.scrollTop > 400);
+  const body = document.body;
+  const cursorGlow = document.getElementById('cursorGlow');
+  const headerRotator = document.getElementById('headerRotator');
+  const installButton = document.querySelector('header.top .btn.solid');
+  const nuhUh = document.getElementById('nuhUh');
+  let scrollTarget = window.scrollY;
+  let currentScroll = window.scrollY;
+  let scrollRaf = null;
+
+  body.classList.add('at-top');
+
+  function showNuhUh() {
+    if (!nuhUh) return;
+    nuhUh.classList.add('show');
+    clearTimeout(showNuhUh.timer);
+    showNuhUh.timer = setTimeout(() => {
+      nuhUh.classList.remove('show');
+    }, 3000);
+  }
+
+  document.addEventListener('contextmenu', (event) => {
+    event.preventDefault();
+    showNuhUh();
   });
-  toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  document.addEventListener('keydown', (event) => {
+    if ((event.ctrlKey && event.key.toLowerCase() === 'u') || (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'i')) {
+      event.preventDefault();
+      showNuhUh();
+    }
+  });
+
+  let cursorX = window.innerWidth / 2;
+  let cursorY = window.innerHeight / 2;
+  let glowX = cursorX;
+  let glowY = cursorY;
+
+  function updateCursorGlow() {
+    glowX += (cursorX - glowX) * 0.24;
+    glowY += (cursorY - glowY) * 0.24;
+    cursorGlow.style.left = `${glowX}px`;
+    cursorGlow.style.top = `${glowY}px`;
+    requestAnimationFrame(updateCursorGlow);
+  }
+
+  updateCursorGlow();
+
+  window.addEventListener('mousemove', (event) => {
+    cursorX = event.clientX;
+    cursorY = event.clientY;
+  });
+
+  function updateScrollProgress(scrollValue = window.scrollY) {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const progressRatio = maxScroll > 0 ? Math.min(Math.max(scrollValue / maxScroll, 0), 1) : 0;
+    const progressWidth = progressRatio * 100;
+
+    progress.style.width = `${progressWidth}%`;
+    toTop.classList.toggle('show', scrollValue > 400);
+    body.classList.toggle('at-top', scrollValue < 80);
+
+    if (headerRotator && installButton) {
+      const rotation = progressRatio * 360;
+      const buttonRect = installButton.getBoundingClientRect();
+      const headerRect = headerRotator.parentElement.getBoundingClientRect();
+      const targetX = Math.max(0, buttonRect.left - headerRect.left - 10);
+      const offset = progressRatio * targetX;
+      headerRotator.style.transform = `rotate(${rotation}deg)`;
+      headerRotator.style.marginLeft = `${offset}px`;
+    }
+  }
+
+  function animateScroll() {
+    currentScroll += (scrollTarget - currentScroll) * 0.035;
+    window.scrollTo(0, currentScroll);
+    updateScrollProgress(currentScroll);
+
+    if (Math.abs(scrollTarget - currentScroll) > 0.2) {
+      scrollRaf = requestAnimationFrame(animateScroll);
+    } else {
+      scrollRaf = null;
+      updateScrollProgress(scrollTarget);
+    }
+  }
+
+  window.addEventListener('scroll', updateScrollProgress);
+
+  window.addEventListener('wheel', (event) => {
+    event.preventDefault();
+    scrollTarget += event.deltaY * 0.5;
+    scrollTarget = Math.max(0, Math.min(scrollTarget, document.documentElement.scrollHeight - window.innerHeight));
+    if (!scrollRaf) {
+      scrollRaf = requestAnimationFrame(animateScroll);
+    }
+  }, { passive: false });
+
+  function smoothScrollToTop(duration = 1200) {
+    const start = window.scrollY;
+    const startTime = performance.now();
+
+    function step(now) {
+      const elapsed = Math.min((now - startTime) / duration, 1);
+      const ease = 1 - Math.pow(1 - elapsed, 3);
+      window.scrollTo(0, start * (1 - ease));
+      if (elapsed < 1) {
+        requestAnimationFrame(step);
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  toTop.addEventListener('click', (event) => {
+    event.preventDefault();
+    smoothScrollToTop();
+  });
 
   const links = document.querySelectorAll('nav.side a');
   const sections = [...links].map(a => document.querySelector(a.getAttribute('href')));
