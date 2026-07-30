@@ -162,7 +162,7 @@
   });
 
   document.addEventListener('keydown', (event) => {
-    if ((event.ctrlKey && event.key.toLowerCase() === 'u') || (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'i')) {
+    if ((event.ctrlKey && event.key.toLowerCase() === 'u') || (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'i') || (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === 'c')) {
       event.preventDefault();
       showNuhUh();
     }
