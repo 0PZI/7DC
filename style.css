@@ -1,11 +1,11 @@
 :root {
   --font: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
   --bg: #070707;
-  --bg-2: #101012;
+  --bg-2: #141414;
   --fg: #f2f2f2;
-  --muted: #8a8a90;
-  --line: #26262a;
-  --line-strong: #3a3a40;
+  --muted: #adadad;
+  --line: #2e2e2e;
+  --line-strong: #414141;
   --code-bg: #161619;
   --c-g: radial-gradient(circle, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 38%, rgba(255,255,255,0) 72%);
   --box-glow: 0 0 24px rgba(196, 196, 196, 0.596), 0 0 40px rgba(212, 212, 212, 0.678);
@@ -116,7 +116,7 @@ header.top {
   align-items: center;
   justify-content: space-between;
   padding: 10px 22px;
-  background: var(--bg-2);
+  background: var(--bg);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
