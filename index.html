@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="paint-ready">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>7DC</title>
+<title>7DC — Your 7TV emotes everywhere on Discord</title>
+<meta name="description" content="Bring your 7TV emotes to Discord with 7DC, from reactions to autocomplete and account-wide access." />
+<meta name="theme-color" content="#070707" />
 <link rel="icon" type="image/png" href="https://cdn.discordapp.com/avatars/1513755393682313467/7dd158497f48cb87aa8e3716f25e5c22.png?size=128" />
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet" />
 <link href="style.css" rel="stylesheet" />
@@ -21,7 +23,7 @@
 </header>
 
 <div class="layout">
-  <nav class="side" id="toc">
+  <nav class="side" id="toc" aria-label="Section navigation">
     <a href="#overview">Overview</a>
     <a href="#features">Features</a>
     <a href="#usage">How to Use</a>
@@ -47,30 +49,30 @@
     <section id="features">
       <h2><a href="https://7tv.app/emotes/01FDW4SE1R000CM9KGHJPMM9KQ" target="_blank" rel="noopener noreferrer" aria-label="Open the Features emote on 7TV" title="Open the Features emote on 7TV"><img src="https://cdn.7tv.app/emote/01FDW4SE1R000CM9KGHJPMM9KQ/4x.avif" alt="Features emote" /></a> Features</h2>
       <div class="features">
-        <div class="feature"><h3>Use everywhere</h3><p>Thanks to Discord's "User Install" feature, your emotes follow you globally.</p></div>
-        <div class="feature"><h3>7TV sync</h3><p>Pulls directly from your current active 7TV emote-set.</p></div>
-        <div class="feature"><h3>Reactions</h3><p>React to any message using your emotes — guide below in Commands.</p></div>
-        <div class="feature"><h3>Autocomplete</h3><p>Search for emotes instantly through the Discord command UI.</p></div>
+        <article class="feature"><h3>Use everywhere</h3><p>Thanks to Discord's "User Install" feature, your emotes follow you globally.</p></article>
+        <article class="feature"><h3>7TV sync</h3><p>Pulls directly from your current active 7TV emote-set.</p></article>
+        <article class="feature"><h3>Reactions</h3><p>React to any message using your emotes — guide below in Commands.</p></article>
+        <article class="feature"><h3>Autocomplete</h3><p>Search for emotes instantly through the Discord command UI.</p></article>
       </div>
     </section>
 
     <section id="usage">
       <h2><a href="https://7tv.app/emotes/01H481W50G0005ERYRZDP1SG3M" target="_blank" rel="noopener noreferrer"><img src="https://cdn.7tv.app/emote/01H481W50G0005ERYRZDP1SG3M/4x.avif" alt="" /></a> How to Use</h2>
       <div class="steps">
-        <div class="step"><div class="num">1</div><div><h3>Link your account</h3><p>Connect your Discord account to your <a href="https://7tv.app/settings" target="_blank" rel="noopener">7TV profile</a>.</p></div></div>
-        <div class="step"><div class="num">2</div><div><h3>Add 7DC to Discord</h3><p><a href="https://discord.com/oauth2/authorize?client_id=1513755393682313467" target="_blank" rel="noopener">Install the app</a> to your account.</p></div></div>
-        <div class="step"><div class="num">3</div><div><h3>Start sending emotes</h3><p>Use the commands below to send emotes or configure your experience.</p></div></div>
+        <article class="step"><div class="num">1</div><div><h3>Link your account</h3><p>Connect your Discord account to your <a href="https://7tv.app/settings" target="_blank" rel="noopener">7TV profile</a>.</p></div></article>
+        <article class="step"><div class="num">2</div><div><h3>Add 7DC to Discord</h3><p><a href="https://discord.com/oauth2/authorize?client_id=1513755393682313467" target="_blank" rel="noopener">Install the app</a> to your account.</p></div></article>
+        <article class="step"><div class="num">3</div><div><h3>Start sending emotes</h3><p>Use the commands below to send emotes or configure your experience.</p></div></article>
       </div>
     </section>
 
     <section id="commands">
       <h2><a href="https://7tv.app/emotes/01FP2JXAT0000EJT2EVEY3HXZ8" target="_blank" rel="noopener noreferrer"><img src="https://cdn.7tv.app/emote/01FP2JXAT0000EJT2EVEY3HXZ8/4x.avif" alt="" /></a> Commands</h2>
-      <!-- <input class="cmd-search" id="cmdSearch" placeholder="Filter commands…" /> -->
+      <input class="cmd-search" id="cmdSearch" type="search" autocomplete="off" hidden />
       <div class="cmd-list" id="cmdList">
-        <div class="cmd"><code>/emote [name]</code> <span class="desc">Search and send an emote from your active emote-set (alias: <code>/e</code>).</span><button class="copy" data-copy="/emote name:">Copy</button></div>
-        <div class="cmd"><code>/size [small/medium/large]</code> <span class="desc">Change your default emote preview size (default = small).</span><button class="copy" data-copy="/size size:">Copy</button></div>
-        <div class="cmd"><code>/set [emote-set ID or link]</code> <span class="desc">Change your active emote-set or fall back to default.</span><button class="copy" data-copy="/set emote_set:">Copy</button></div>
-        <div class="cmd"><code>/help</code> <span class="desc">Show info about 7DC.</span><button class="copy" data-copy="/help">Copy</button></div>
+        <div class="cmd"><code>/emote [name]</code> <span class="desc">Search and send an emote from your active emote-set (alias: <code>/e</code>).</span><button class="copy" type="button" data-copy="/emote name:">Copy</button></div>
+        <div class="cmd"><code>/size [small/medium/large]</code> <span class="desc">Change your default emote preview size (default = small).</span><button class="copy" type="button" data-copy="/size size:">Copy</button></div>
+        <div class="cmd"><code>/set [emote-set ID or link]</code> <span class="desc">Change your active emote-set or fall back to default.</span><button class="copy" type="button" data-copy="/set emote_set:">Copy</button></div>
+        <div class="cmd"><code>/help</code> <span class="desc">Show info about 7DC.</span><button class="copy" type="button" data-copy="/help">Copy</button></div>
       </div>
 
       <details>
@@ -131,7 +133,7 @@
   <div class="disc">7TV Discord Bridge · Not affiliated with 7TV or Discord.</div>
 </footer>
 
-<button id="toTop" title="Back to top"></button>
+<button id="toTop" title="Back to top" aria-label="Back to top"></button>
 
 <script>
   const progress = document.getElementById('progress');
@@ -141,9 +143,11 @@
   const headerRotator = document.getElementById('headerRotator');
   const installButton = document.querySelector('header.top .btn.solid');
   const nuhUh = document.getElementById('nuhUh');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   let scrollTarget = window.scrollY;
   let currentScroll = window.scrollY;
   let scrollRaf = null;
+  let scrollWorkPending = false;
 
   body.classList.add('at-top');
 
@@ -201,11 +205,23 @@
       const rotation = progressRatio * 967;
       const buttonRect = installButton.getBoundingClientRect();
       const headerRect = headerRotator.parentElement.getBoundingClientRect();
-      const targetX = Math.max(0, buttonRect.left - headerRect.left - 10);
+      const targetX = Math.max(0, buttonRect.left - headerRect.left + 130.67);
       const offset = progressRatio * targetX;
       headerRotator.style.transform = `rotate(${rotation}deg)`;
       headerRotator.style.marginLeft = `${offset}px`;
     }
+  }
+
+  function scheduleScrollWork() {
+    if (scrollWorkPending) return;
+    scrollWorkPending = true;
+
+    requestAnimationFrame(() => {
+      scrollWorkPending = false;
+      currentScroll = window.scrollY;
+      updateScrollProgress(currentScroll);
+      setActive();
+    });
   }
 
   function animateScroll() {
@@ -231,9 +247,10 @@
     updateScrollProgress(scrollValue);
   }
 
-  window.addEventListener('scroll', updateScrollProgress);
+  window.addEventListener('scroll', scheduleScrollWork, { passive: true });
 
   window.addEventListener('wheel', (event) => {
+    if (prefersReducedMotion.matches) return;
     event.preventDefault();
     scrollTarget += event.deltaY * 0.5;
     scrollTarget = Math.max(0, Math.min(scrollTarget, document.documentElement.scrollHeight - window.innerHeight));
@@ -243,6 +260,12 @@
   }, { passive: false });
 
   function smoothScrollToTop(duration = 1200) {
+    if (prefersReducedMotion.matches) {
+      resetScrollState(0);
+      window.scrollTo(0, 0);
+      return;
+    }
+
     const start = window.scrollY;
     const startTime = performance.now();
 
@@ -296,7 +319,13 @@
 
       scrollTarget = targetTop;
       currentScroll = window.scrollY;
-      if (!scrollRaf) {
+      if (prefersReducedMotion.matches) {
+        window.scrollTo(0, targetTop);
+        currentScroll = targetTop;
+        scrollTarget = targetTop;
+        updateScrollProgress(targetTop);
+        setActive();
+      } else if (!scrollRaf) {
         scrollRaf = requestAnimationFrame(animateScroll);
       }
       setActive();
@@ -316,11 +345,17 @@
       current = sections.length - 1;
     }
 
-    links.forEach((l, i) => l.classList.toggle('active', i === current));
+    links.forEach((l, i) => {
+      l.classList.toggle('active', i === current);
+      if (i === current) {
+        l.setAttribute('aria-current', 'page');
+      } else {
+        l.removeAttribute('aria-current');
+      }
+    });
   }
 
-  window.addEventListener('scroll', setActive);
-  window.addEventListener('resize', setActive);
+  window.addEventListener('resize', scheduleScrollWork, { passive: true });
   setActive();
 
   document.querySelectorAll('.cmd .copy').forEach(btn => {
