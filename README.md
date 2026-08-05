@@ -6,6 +6,7 @@ This started as a simple idea: bringing the 7TV Twitch emote experience - especi
 <p align="center">
   <a href="https://discord.com/oauth2/authorize?client_id=1513755393682313467">
     <img src="https://img.shields.io/badge/%20Install%207DC-5865F2?style=for-the-badge" alt="Install 7DC">
+    <img src="https://img.shields.io/badge/Join%207DC-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord Server">
   </a>
 </p>
 
